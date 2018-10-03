@@ -14,6 +14,14 @@ before_install:
   # Save path to the git respository
   - PROJECT_PATH=$(pwd)
 
+deploy:
+  provider: releases
+  api_key: bc1b9dc4cda5708841862fc86f4b694eb5f0bbeb
+  file: home/travis/build/cgawron/espmqtt/examples/mqtt_tcp/build/mqtt_tcp.bin
+  skip_cleanup: true
+  on:
+    tags: true
+
 install:
   # Install ESP32 toochain following steps as desribed
   # in http://esp-idf.readthedocs.io/en/latest/linux-setup.html
