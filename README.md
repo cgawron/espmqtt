@@ -1,7 +1,5 @@
-[![](https://travis-ci.org/tuanpmt/espmqtt.svg?branch=master)](https://travis-ci.org/tuanpmt/espmqtt)
-[![](http://hits.dwyl.io/tuanpmt/espmqtt.svg)](http://hits.dwyl.io/tuanpmt/espmqtt)
-[![Twitter Follow](https://img.shields.io/twitter/follow/tuanpmt.svg?style=social&label=Follow)](https://twitter.com/tuanpmt)
-![GitHub contributors](https://img.shields.io/github/contributors/tuanpmt/espmqtt.svg)
+[![](https://travis-ci.org/cgawron/espmqtt.svg?branch=master)](https://travis-ci.org/cgawron/espmqtt)
+![GitHub contributors](https://img.shields.io/github/contributors/cgawron/espmqtt.svg)
 
 # ESP MQTT Library
 
