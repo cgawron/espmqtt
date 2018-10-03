@@ -3,11 +3,12 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/tuanpmt.svg?style=social&label=Follow)](https://twitter.com/tuanpmt)
 ![GitHub contributors](https://img.shields.io/github/contributors/tuanpmt/espmqtt.svg)
 
-# ESP32 MQTT Library
+# ESP MQTT Library
 
 ## Features
 
 - Based on: https://github.com/tuanpmt/esp_mqtt 
+- Support for ESP32 and ESP8266 (using the latest esp-idf style SDK)
 - Support MQTT over TCP, SSL with mbedtls, MQTT over Websocket, MQTT over Websocket Secure
 - Easy to setup with URI 
 - Multiple instances (Multiple clients in one application)
@@ -65,7 +66,6 @@ const esp_mqtt_client_config_t mqtt_cfg = {
 //MQTT client will connect to iot.eclipse.org using port 4567
 ```
 
-
 ### SSL 
 
 - Get Certification from server, example: `iot.eclipse.org` `openssl s_client -showcerts -connect iot.eclipse.org:8883 </dev/null 2>/dev/null|openssl x509 -outform PEM >iot_eclipse_org.pem`
@@ -97,6 +97,8 @@ const esp_mqtt_client_config_t mqtt_cfg = {
 -  `task_prio, task_stack` for MQTT task, default priority is 5, and task_stack = 6144 bytes (or default task stack can be set via `make menucofig`).
 -  `buffer_size` for MQTT send/receive buffer, default is 1024
 -  `cert_pem` pointer to CERT file for server verify (with SSL), default is NULL, not required to verify the server
+-  `client_cert_pem` pointer to CERT file for SSL mutual authentication, default is NULL, not required if mutual authentication is not needed. If it is not NULL, also `client_key_pem` has to be provided.
+-  `client_key_pem` pointer to PEM private key file for SSL mutual authentication, default is NULL, not required if mutual authentication is not needed. If it is not NULL, also `client_cert_pem` has to be provided.
 -  `transport`: override URI transport
     +  `MQTT_TRANSPORT_OVER_TCP`: MQTT over TCP, using scheme: `mqtt`
     +  `MQTT_TRANSPORT_OVER_SSL`: MQTT over SSL, using scheme: `mqtts`
@@ -170,6 +172,6 @@ esp_mqtt_client_start(client);
 ```
 
 ## License
-
-[@tuanpmt](https://twitter.com/tuanpmt)
+- MQTT Package - [Stephen Robinson - contiki-mqtt](https://github.com/esar/contiki-mqtt)
+- Others [@tuanpmt](https://twitter.com/tuanpmt)
 Apache License

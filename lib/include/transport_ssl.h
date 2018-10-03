@@ -14,25 +14,28 @@ extern "C" {
 
 
 /**
- * @brief      Create new SSL transport
+ * @brief       Create new SSL transport, the transport handle must be release transport_destroy callback
  *
- * @return
- *  - transport
- *  - NULL
+ * @return      the allocated transport_handle_t, or NULL if the handle can not be allocated
  */
 transport_handle_t transport_ssl_init();
 
 /**
- * @brief      Set SSL certification data (as PEM format)
+ * @brief      Set SSL certificate data (as PEM format).
+ *             Note that, this function stores the pointer to data, rather than making a copy.
+ *             So we need to make sure to keep the data lifetime before cleanup the connection
  *
  * @param      t     ssl transport
  * @param[in]  data  The pem data
  * @param[in]  len   The length
  */
 void transport_ssl_set_cert_data(transport_handle_t t, const char *data, int len);
+void transport_ssl_set_client_cert_data(transport_handle_t t, const char *data, int len);
+void transport_ssl_set_client_key_data(transport_handle_t t, const char *data, int len);
 
 
 #ifdef __cplusplus
 }
 #endif
 #endif
+
