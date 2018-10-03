@@ -1,64 +1,44 @@
 sudo: false
 language: bash
 os:
-  - linux
-
+- linux
 addons:
   apt:
     packages:
-      - gperf
-      - python
-      - python-serial
-
+    - gperf
+    - python
+    - python-serial
 before_install:
-  # Save path to the git respository
-  - PROJECT_PATH=$(pwd)
-
+- PROJECT_PATH=$(pwd)
 deploy:
   provider: releases
-  api_key: bc1b9dc4cda5708841862fc86f4b694eb5f0bbeb
-  file: home/travis/build/cgawron/espmqtt/examples/mqtt_tcp/build/mqtt_tcp.bin
-  skip_cleanup: true
+  api_key:
+    secure: ITS+chX9eIbPaFNCJ/pcgVIMlK2RUApBy5k97YQ1vRI4x8yr1jiLMpENYfi192CgjR1c6MeCA8BDzCfh29tj0pn/6HD1K6KgLH5VtHBLsGJcx62HpD8ZnVPm+g1qBJwVwt/rgbtjqso1+6geeZJQdzUO9dZK3Y83M//IA0nM/PcrE5ylOWB48TQRT15Ma/IoIRRf8IeIdyZyUMNRuHqUYdkK10L6xbbkzXnOIZXCKUsKhfV0MiNQoUnbH0smj0sHHhr/X4O3V7yycChDoTBOzbBq/4qei54GIF8IRrS3kIFE/oeqxcIM9YqyChFNlglFEIxnrMUYEFWvzrwGvF1BG72XQpjXBgtrqP5EqoCH6u40Reh6iL3LL7bAEHU0Wu1FASJVAFuSzomxnXl+6l5EPD+Kpnha1Hl9J4tGySAdLvshEwW3Syd+Xl+7e7RdESIoktfDc94uoUccdjLQfj+lUQmjgjx00Q8spRw+cbrbnXWIzYc6Xr4oYoaU3AHEGvA1xybcTUANnbcf4D69YLBGUvnJl5u6ITiktmhQ1IVtiwLaldRLTKzcKSS6WsoLn+fWPI6Qz5RMO+J9DGLmSfa0yoZwyaT1U98GXGj0t05DcXCSMm+p0IRi0NG8LgjIz8bgxh8IXbsT9AJBTIOkDvRywtpdx8CBCBjcoJfxlU27ues=
+  file: "/home/travis/build/cgawron/espmqtt/examples/mqtt_tcp/build/mqtt_tcp.bin"
   on:
-    tags: true
-
+    repo: cgawron/espmqtt
 install:
-  # Install ESP32 toochain following steps as desribed
-  # in http://esp-idf.readthedocs.io/en/latest/linux-setup.html
-  #
-  # Get required packages - already done above, see addons: apt: packages:
-  # - sudo apt-get install git wget make libncurses-dev flex bison gperf python python-serial
-  # Prepare directory for the toolchain
-  - mkdir -p ~/esp
-  - cd ~/esp
-  # Download binary toolchain for the ESP32
-  - wget https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
-  - tar -xzf xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
-  # Make xtensa-esp32-elf available for all terminal sessions
-  - export PATH=$PATH:$HOME/esp/xtensa-esp32-elf/bin
-  # Get ESP-IDF from github
-  - git clone --recursive https://github.com/espressif/esp-idf.git
-  # Set the path to ESP-IDF directory
-  - export IDF_PATH=~/esp/esp-idf
-  # Install python requirements
-  - python -m pip install --user -r /home/travis/esp/esp-idf/requirements.txt
-
+- mkdir -p ~/esp
+- cd ~/esp
+- wget https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
+- tar -xzf xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
+- export PATH=$PATH:$HOME/esp/xtensa-esp32-elf/bin
+- git clone --recursive https://github.com/espressif/esp-idf.git
+- export IDF_PATH=~/esp/esp-idf
+- python -m pip install --user -r /home/travis/esp/esp-idf/requirements.txt
 script:
-  # Go back to the git repository
-  - cd $PROJECT_PATH/examples/mqtt_tcp
-  # Update configuration so that kconfig doesn't start interactive mode
-  - make defconfig
-  # Build project from the git repository
-  - make -j4
-  - cd $PROJECT_PATH/examples/mqtt_ssl
-  - make defconfig
-  - make -j4
-  - cd $PROJECT_PATH/examples/mqtt_ws
-  - make defconfig
-  - make -j4
-  - cd $PROJECT_PATH/examples/mqtt_wss
-  - make defconfig
-  - make -j4
-  - cd $PROJECT_PATH/examples/emitter-client
-  - make defconfig
-  - make -j4
+- cd $PROJECT_PATH/examples/mqtt_tcp
+- make defconfig
+- make -j4
+- cd $PROJECT_PATH/examples/mqtt_ssl
+- make defconfig
+- make -j4
+- cd $PROJECT_PATH/examples/mqtt_ws
+- make defconfig
+- make -j4
+- cd $PROJECT_PATH/examples/mqtt_wss
+- make defconfig
+- make -j4
+- cd $PROJECT_PATH/examples/emitter-client
+- make defconfig
+- make -j4
